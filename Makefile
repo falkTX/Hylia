@@ -68,7 +68,7 @@ endif
 OBJS = build/hylia.cpp.o
 VERSION = 0.0.1
 
-PREFIX = /usr
+PREFIX = /usr/local
 INCDIR = $(PREFIX)/include
 LIBDIR = $(PREFIX)/lib
 
