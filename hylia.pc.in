@@ -1,0 +1,10 @@
+prefix=@PREFIX@
+exec_prefix=${prefix}
+libdir=@LIBDIR@
+includedir=@INCDIR@
+
+Name: Hylia
+Description: Host transport library for Ableton Link
+Version: @VERSION@
+Libs: ${libdir}/hylia.a
+Cflags: -I${includedir}
