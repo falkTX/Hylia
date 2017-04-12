@@ -74,7 +74,7 @@ LIBDIR = $(PREFIX)/lib
 
 # ----------------------------------------------------------------------------------------------------------------------------
 
-all: build/hylia.a build/hylia.pc
+all: build/libhylia.a build/hylia.pc
 
 # ----------------------------------------------------------------------------------------------------------------------------
 
@@ -91,18 +91,18 @@ install: all
 	install -d $(DESTDIR)$(LIBDIR)/pkgconfig
 
 	install -m 644 hylia.h $(DESTDIR)$(INCDIR)
-	install -m 644 build/hylia.a $(DESTDIR)$(LIBDIR)
+	install -m 644 build/libhylia.a $(DESTDIR)$(LIBDIR)
 	install -m 644 build/hylia.pc $(DESTDIR)$(LIBDIR)/pkgconfig
 
 uninstall:
 	rm -f $(DESTDIR)$(INCDIR)/hylia.h
-	rm -f $(DESTDIR)$(LIBDIR)/hylia.a
+	rm -f $(DESTDIR)$(LIBDIR)/libhylia.a
 	rm -f $(DESTDIR)$(LIBDIR)/pkgconfig/hylia.pc
 
 # ----------------------------------------------------------------------------------------------------------------------------
 
-build/hylia.a: $(OBJS)
-	@echo "Creating hylia.a"
+build/libhylia.a: $(OBJS)
+	@echo "Creating libhylia.a"
 	@rm -f $@
 	@$(AR) crs $@ $^
 
