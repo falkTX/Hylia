@@ -6,5 +6,5 @@ includedir=@INCDIR@
 Name: Hylia
 Description: Host transport library for Ableton Link
 Version: @VERSION@
-Libs: ${libdir}/hylia.a -lstdc++
+Libs: -L${libdir} -lhylia -lstdc++
 Cflags: -I${includedir}
