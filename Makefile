@@ -111,6 +111,7 @@ build/%.cpp.o: %.cpp
 	$(CXX) $< $(BUILD_CXX_FLAGS) -c -o $@
 
 build/%.pc: %.pc.in
+	-@mkdir -p build
 	sed \
 	-e "s|@PREFIX@|$(PREFIX)|" \
 	-e "s|@INCDIR@|$(INCDIR)|" \
