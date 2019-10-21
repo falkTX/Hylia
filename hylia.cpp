@@ -17,7 +17,17 @@
 
 #include "hylia.h"
 
+#if defined(__clang_major__) && __clang_major__ >= 4
+# pragma clang diagnostic push
+# pragma clang diagnostic ignored "-Wunused-local-typedef"
+#endif
+
 #include "AudioEngine.hpp"
+
+#if defined(__clang_major__) && __clang_major__ >= 4
+# pragma clang diagnostic pop
+#endif
+
 #include "ableton/link/HostTimeFilter.hpp"
 #include <chrono>
 
@@ -52,6 +62,21 @@ public:
     void setOutputLatency(const uint32_t latency) noexcept
     {
         outputLatency = latency;
+    }
+
+    void setStartStopSyncEnabled(const bool enabled)
+    {
+        engine.setStartStopSyncEnabled(enabled);
+    }
+
+    void startPlaying()
+    {
+        engine.startPlaying();
+    }
+
+    void stopPlaying()
+    {
+        engine.stopPlaying();
     }
 
     void process(const uint32_t frames, LinkTimeInfo* const info)
@@ -102,6 +127,21 @@ void hylia_set_beats_per_minute(hylia_t* link, double beatsPerMinute)
 void hylia_set_output_latency(hylia_t* link, uint32_t latency)
 {
     ((HyliaTransport*)link)->setOutputLatency(latency);
+}
+
+void hylia_set_start_stop_sync_enabled(hylia_t* link, bool enabled)
+{
+    ((HyliaTransport*)link)->setStartStopSyncEnabled(enabled);
+}
+
+void hylia_start_playing(hylia_t* link)
+{
+    ((HyliaTransport*)link)->startPlaying();
+}
+
+void hylia_stop_playing(hylia_t* link)
+{
+    ((HyliaTransport*)link)->stopPlaying();
 }
 
 void hylia_process(hylia_t* link, uint32_t frames, hylia_time_info_t* info)

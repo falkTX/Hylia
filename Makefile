@@ -8,12 +8,25 @@ AR  ?= ar
 CC  ?= gcc
 CXX ?= g++
 
-# ----------------------------------------------------------------------------------------------------------------------------
-# Fallback to Linux if no other OS defined
+# ---------------------------------------------------------------------------------------------------------------------
+# Auto-detect OS if not defined
 
+ifneq ($(LINUX),true)
 ifneq ($(MACOS),true)
 ifneq ($(WIN32),true)
+
+TARGET_MACHINE := $(shell $(CC) -dumpmachine)
+ifneq (,$(findstring linux,$(TARGET_MACHINE)))
 LINUX=true
+endif
+ifneq (,$(findstring apple,$(TARGET_MACHINE)))
+MACOS=true
+endif
+ifneq (,$(findstring mingw,$(TARGET_MACHINE)))
+WIN32=true
+endif
+
+endif
 endif
 endif
 
@@ -44,12 +57,13 @@ CXXFLAGS   += -fvisibility-inlines-hidden
 endif
 
 BUILD_C_FLAGS   = $(BASE_FLAGS) -std=gnu99 $(CFLAGS)
-BUILD_CXX_FLAGS = $(BASE_FLAGS) -std=gnu++0x $(CXXFLAGS) $(CPPFLAGS)
+BUILD_CXX_FLAGS = $(BASE_FLAGS) -std=gnu++11 $(CXXFLAGS) $(CPPFLAGS)
 
 # ----------------------------------------------------------------------------------------------------------------------------
 
-BUILD_CXX_FLAGS += -Wno-multichar -Wno-unused-variable -Wno-uninitialized -Wno-missing-field-initializers
-BUILD_CXX_FLAGS += -Ilink
+BUILD_CXX_FLAGS += -Wno-missing-field-initializers -Wno-multichar -Wno-uninitialized -Wno-unknown-pragmas
+BUILD_CXX_FLAGS += -I. -Ilink
+# -Wno-unused-variable -Wno-uninitialized
 
 ifeq ($(LINUX),true)
 BUILD_CXX_FLAGS += -DLINK_PLATFORM_LINUX=1
@@ -66,7 +80,7 @@ endif
 # ----------------------------------------------------------------------------------------------------------------------------
 
 OBJS = build/hylia.cpp.o
-VERSION = 0.0.1
+VERSION = 1.0.1
 
 PREFIX = /usr/local
 INCDIR = $(PREFIX)/include
